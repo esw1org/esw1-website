@@ -3,17 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book a Speaking Event — Everything Starts With 1</title>
+<title>Book a Speaking Event | Everything Starts With 1</title>
 <meta name="description" content="Invite Tina Long to speak with your school, district, or organization about bullying, bullycide, and mental health awareness.">
 <link rel="icon" href="favicon.png">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="site-header">
+  <div class="crisis-strip" id="help">
+    <div class="container">
+      <span>Struggling right now?</span>
+      <a href="tel:988"><strong>Call or text 988</strong></a>
+    </div>
+  </div>
   <div class="nav-wrap">
     <a href="index.html" class="brand">
-      <img src="esw1-logo.png" alt="Everything Starts With 1 logo">
+      <img src="assets/logo/esw1-logo.png" alt="Everything Starts With 1 logo">
       <span class="brand-name">Everything Starts<br><small>With 1</small></span>
     </a>
     <nav class="main-nav" aria-label="Primary">
@@ -46,7 +52,7 @@
   <div class="container">
     <span class="eyebrow">Book a Speaking Event</span>
     <h1>Bring Tina's story to your school or organization.</h1>
-    <p class="lede">Tina speaks honestly and directly about bullying, bullycide, and mental health — for students, parents, and educators ready to have the real conversation. Fill out the form below and she'll reach out personally.</p>
+    <p class="lede">Tina speaks honestly about bullying, bullycide, and mental health. Fill out the form and she'll reach out personally.</p>
   </div>
 </section>
 
@@ -59,7 +65,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
         </div>
         <h3>The ESW1 Assembly</h3>
-        <p>Led by Tina Long, the assembly shares Tyler's story and the legacy one voice can leave behind. We talk about how adults can support a bullied child through teachers, counselors, and administrators — and how students hold the power to make things better for the next generation. Kids have told us Tyler's story saved their lives; kids who've bullied others have told us they didn't realize how much their words hurt.</p>
+        <p>Led by Tina Long, the assembly shares Tyler's story and the legacy one voice can leave. Kids have told us it saved their lives; kids who've bullied others have told us they didn't realize how much their words hurt.</p>
       </div>
 
       <div class="card">
@@ -76,12 +82,12 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
         </div>
         <h3>What to expect</h3>
-        <p>Every event is tailored to the audience — assemblies, staff trainings, parent nights, or conference sessions. Reach out with your event details and Tina will follow up to talk through the right format.</p>
+        <p>Every event is tailored to the audience. Reach out with your details and Tina will follow up.</p>
       </div>
     </div>
 
     <div class="form-card">
-      <div class="form-success">Thank you — your request has been received. Tina will be in touch soon.</div>
+      <div class="form-success">Thank you, your request has been received. Tina will be in touch soon.</div>
       <form data-esw1-form>
         <div class="form-row two-col">
           <div>
@@ -124,7 +130,7 @@
           <textarea id="message" name="message" rows="4" placeholder="Audience size, format, goals for the talk…" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send Booking Request</button>
-        <p class="form-note">Submissions go straight to Tina's inbox. <em>(Dev note: this form currently uses a placeholder handler — see README.md to connect it to a real inbox before launch.)</em></p>
+        <p class="form-note">Submissions go straight to Tina's inbox.</p>
       </form>
     </div>
 
@@ -160,6 +166,19 @@
 
     <div class="detail-lists">
       <details>
+        <summary>More Media &amp; Radio</summary>
+        <div class="list-columns">
+          <div>The Bully Battle, 1-hour special</div>
+          <div>Chattanooga TV</div>
+          <div>WatchDOGS Radio Show</div>
+          <div>Jon Hansen Radio Show</div>
+          <div>Lizzie Sider's Anti-Bullying Special</div>
+          <div>US Army Anti-Bullying Video, OH</div>
+          <div>Cassandra Perkins Radio Show</div>
+        </div>
+      </details>
+
+      <details>
         <summary>Schools &amp; Universities</summary>
         <div class="list-columns">
           <div>Haleyville Middle School, AL</div>
@@ -171,6 +190,7 @@
           <div>University of Hartford</div>
           <div>Vanderbilt University</div>
           <div>Green Chimneys Schools, NY</div>
+          <div>Jewish Temple, FL</div>
           <div>Westfield Schools, IN</div>
           <div>Lake Highland Prep School, FL</div>
           <div>North Fayette Valley School, IA</div>
@@ -178,7 +198,7 @@
           <div>North Iowa Community College</div>
           <div>Dalton State College</div>
         </div>
-        <p style="font-size:0.85rem;color:var(--color-ink-soft);padding-bottom:16px;margin:0;">Plus schools in the LA, Chicago, and Missouri areas and CT/MA — and virtual talks with classrooms in TX, Iowa, Australia, and the Philippines.</p>
+        <p style="font-size:0.85rem;color:var(--color-ink-soft);padding-bottom:16px;margin:0;">Plus schools in LA, Chicago, Missouri, and CT/MA, and virtual talks in TX, Iowa, Australia, and the Philippines.</p>
       </details>
 
       <details>
@@ -188,6 +208,7 @@
           <div>White House Caucus on Anti-Bullying</div>
           <div>National Karate Conference</div>
           <div>American School Health Association</div>
+          <div>Wired Differently Conference</div>
           <div>National Association of School Nurses</div>
           <div>Texas State University Anti-Bullying Summit</div>
           <div>Out &amp; Equal Conference</div>
@@ -205,14 +226,17 @@
           <div>White House Screening of "Bully"</div>
           <div>Dept. of Education Screening of "Bully"</div>
           <div>"Bully" Screening, South Carolina</div>
+          <div>Award from the Army, OH, for anti-bullying work</div>
           <div>Columbia University Film Awards, NYC</div>
           <div>Brit Doc Awards, NYC</div>
           <div>GLAAD Media Awards, San Francisco</div>
           <div>GLAAD Gala, Atlanta</div>
           <div>Out with the Stars (PFLAG) Awards</div>
+          <div>Foster Parents Event, Dalton, GA</div>
           <div>URJ Camp Coleman, GA</div>
           <div>URJ Camp Eisner &amp; Camp Crane Lake, MA</div>
           <div>Lear Retreat Center Conference, CT</div>
+          <div>Mitspah Jewish Temple, Chattanooga, TN</div>
         </div>
       </details>
 
@@ -249,7 +273,7 @@
       </details>
     </div>
 
-    <p class="tone-note" style="margin-top:28px;">A note from a 2013 university write-up of an ESW1 assembly: <a href="http://njp40.blogspot.com/2013/09/pin-drop-powerful.html" target="_blank" rel="noopener" style="color:var(--color-orange-dark);font-weight:600;">read the recap →</a> &nbsp;·&nbsp; <em>Dev note: this history comes from ESW1's info packet — some links/handles may be dated and worth a quick check before launch.</em></p>
+    <p class="tone-note" style="margin-top:28px;">A note from a 2013 university write-up of an ESW1 assembly: <a href="http://njp40.blogspot.com/2013/09/pin-drop-powerful.html" target="_blank" rel="noopener" style="color:var(--color-orange-dark);font-weight:600;">read the recap →</a></p>
   </div>
 </section>
 
@@ -257,7 +281,7 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand"><img src="esw1-logo.png" alt=""><span>Everything Starts With 1</span></div>
+        <div class="footer-brand"><img src="assets/logo/esw1-logo.png" alt=""><span>Everything Starts With 1</span></div>
         <p style="max-width:34ch;font-size:0.92rem;">Founded by Tina Long in memory of her son Tyler. Everything starts with one voice.</p>
         <div class="footer-crisis">☎ Crisis support: call or text <strong>988</strong></div>
       </div>
@@ -296,6 +320,6 @@
   </div>
 </footer>
 
-<script src="main.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

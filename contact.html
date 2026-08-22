@@ -3,17 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Everything Starts With 1</title>
+<title>Contact | Everything Starts With 1</title>
 <meta name="description" content="Get in touch with Everything Starts With 1.">
 <link rel="icon" href="favicon.png">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="site-header">
+  <div class="crisis-strip" id="help">
+    <div class="container">
+      <span>Struggling right now?</span>
+      <a href="tel:988"><strong>Call or text 988</strong></a>
+    </div>
+  </div>
   <div class="nav-wrap">
     <a href="index.html" class="brand">
-      <img src="esw1-logo.png" alt="Everything Starts With 1 logo">
+      <img src="assets/logo/esw1-logo.png" alt="Everything Starts With 1 logo">
       <span class="brand-name">Everything Starts<br><small>With 1</small></span>
     </a>
     <nav class="main-nav" aria-label="Primary">
@@ -46,14 +52,14 @@
   <div class="container">
     <span class="eyebrow">Contact</span>
     <h1>Get in touch.</h1>
-    <p class="lede">Questions, press inquiries, resource requests, or just want to say hello — send a message and we'll get back to you.</p>
+    <p class="lede">Questions, press inquiries, or just want to say hello? Send a message.</p>
   </div>
 </section>
 
 <section>
   <div class="container" style="max-width:640px;">
     <div class="form-card">
-      <div class="form-success">Thanks for reaching out — we'll be in touch soon.</div>
+      <div class="form-success">Thanks for reaching out, we'll be in touch soon.</div>
       <form data-esw1-form>
         <div class="form-row">
           <label for="c-name">Name</label>
@@ -79,24 +85,17 @@
           <textarea id="c-message" name="message" rows="5" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send Message</button>
-        <p class="form-note"><em>(Dev note: placeholder handler — see README.md to connect this to a real inbox before launch.)</em></p>
+        
       </form>
     </div>
   </div>
 </section>
 
-<div class="crisis-strip">
-  <div class="container">
-    <span>If this is urgent and you or someone you know is in crisis, please don't wait on a reply here.</span>
-    <a href="tel:988" class="btn"><strong>Call or text 988</strong></a>
-  </div>
-</div>
-
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand"><img src="esw1-logo.png" alt=""><span>Everything Starts With 1</span></div>
+        <div class="footer-brand"><img src="assets/logo/esw1-logo.png" alt=""><span>Everything Starts With 1</span></div>
         <p style="max-width:34ch;font-size:0.92rem;">Founded by Tina Long in memory of her son Tyler. Everything starts with one voice.</p>
         <div class="footer-crisis">☎ Crisis support: call or text <strong>988</strong></div>
       </div>
@@ -135,6 +134,6 @@
   </div>
 </footer>
 
-<script src="main.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

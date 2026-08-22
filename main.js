@@ -1,12 +1,14 @@
 // =========================================================
-// Everything Starts With 1 — shared site behavior
+// Everything Starts With 1, shared site behavior
 // =========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavToggle();
   initSearch();
-  initSongWidget();
+  initSongAutoplay();
   initFormHandlers();
+  initCarousel();
+  initPortfolioTimeline();
 });
 
 /* ---------- Mobile nav ---------- */
@@ -20,7 +22,7 @@ function initNavToggle() {
 
 /* ---------- Site search ----------
    Lightweight client-side search across a small hand-authored
-   index of pages/sections. No backend required — fine for an
+   index of pages/sections. No backend required, fine for an
    ~8 page site. Update SITE_INDEX below when pages/content change. */
 const SITE_INDEX = [
   { title: 'Home', url: 'index.html', desc: "ESW1's mission and Tyler's story at a glance." },
@@ -85,46 +87,116 @@ function initSearch() {
   }
 }
 
-/* ---------- Tribute song widget ----------
+/* ---------- Tribute song, plays quietly in the background ----------
    NOTE: "Don't Laugh at Me" (Mark Wills) is commercially licensed
-   music — we link out to an official streaming source rather than
-   hosting/serving the audio file ourselves. True autoplay-with-sound
-   isn't possible in modern browsers, so this starts playback on the
-   visitor's first interaction with the page (click/scroll/keypress),
-   which reads as automatic in practice. Swap SONG_URL for the
-   official/approved link once Tina confirms it. */
-const SONG_URL = 'https://www.youtube.com/watch?v=FVjbo8dW9c8'; // Mark Wills — "Don't Laugh At Me" (Official Music Video)
+   music, so instead of hosting the audio file ourselves, we stream it
+   from YouTube's own player in a hidden frame, with no visible widget or
+   button. Browsers block audio with sound from starting before the
+   visitor has interacted with the page at all, so this tries to start
+   the moment the page loads, and if the browser blocks that, it starts
+   silently on the visitor's very first click, scroll, or key press
+   instead (no separate click needed, any normal use of the page
+   triggers it). Swap SONG_ID for another official video ID if needed. */
+const SONG_ID = 'FVjbo8dW9c8'; // Mark Wills, "Don't Laugh At Me" (Official Music Video)
 
-function initSongWidget() {
-  const widgets = document.querySelectorAll('[data-song-widget]');
-  if (!widgets.length) return;
+function initSongAutoplay() {
+  if (document.getElementById('esw1-song-frame')) return;
 
-  let hasTriggered = false;
-  const triggerAutoOpen = () => {
-    if (hasTriggered) return;
-    hasTriggered = true;
-    widgets.forEach(w => w.classList.add('is-ready'));
-    document.removeEventListener('click', triggerAutoOpen);
-    document.removeEventListener('scroll', triggerAutoOpen);
-    document.removeEventListener('keydown', triggerAutoOpen);
+  const frame = document.createElement('iframe');
+  frame.id = 'esw1-song-frame';
+  frame.style.cssText = 'position:fixed;width:1px;height:1px;left:-9999px;bottom:0;border:0;';
+  frame.allow = 'autoplay';
+  frame.title = "Tyler's song";
+  frame.src = `https://www.youtube.com/embed/${SONG_ID}?autoplay=1&loop=1&playlist=${SONG_ID}&controls=0`;
+  document.body.appendChild(frame);
+
+  let started = false;
+  const startWithSound = () => {
+    if (started) return;
+    started = true;
+    frame.src = `https://www.youtube.com/embed/${SONG_ID}?autoplay=1&loop=1&playlist=${SONG_ID}&controls=0&mute=0`;
+    document.removeEventListener('click', startWithSound);
+    document.removeEventListener('scroll', startWithSound);
+    document.removeEventListener('keydown', startWithSound);
   };
-  document.addEventListener('click', triggerAutoOpen, { once: true });
-  document.addEventListener('scroll', triggerAutoOpen, { once: true, passive: true });
-  document.addEventListener('keydown', triggerAutoOpen, { once: true });
+  document.addEventListener('click', startWithSound, { once: true });
+  document.addEventListener('scroll', startWithSound, { once: true, passive: true });
+  document.addEventListener('keydown', startWithSound, { once: true });
+}
 
-  widgets.forEach(widget => {
-    const btn = widget.querySelector('.song-play');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      window.open(SONG_URL, '_blank', 'noopener');
-    });
+/* ---------- Homepage photo carousel, auto-rotating ---------- */
+function initCarousel() {
+  const carousel = document.querySelector('[data-carousel]');
+  const track = carousel && carousel.querySelector('.carousel-track');
+  const dotsWrap = document.querySelector('[data-carousel-dots]');
+  if (!carousel || !track) return;
+  const items = Array.from(track.children);
+  if (items.length < 2) return;
+
+  let index = 0;
+  let timer = null;
+
+  items.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.setAttribute('aria-label', `Show photo ${i + 1}`);
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
   });
+  const dots = Array.from(dotsWrap.children);
+
+  function goTo(i) {
+    index = (i + items.length) % items.length;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((d, di) => d.classList.toggle('active', di === index));
+  }
+
+  function next() { goTo(index + 1); }
+
+  function start() { timer = setInterval(next, 5000); }
+  function stop() { clearInterval(timer); }
+
+  start();
+  carousel.addEventListener('mouseenter', stop);
+  carousel.addEventListener('mouseleave', start);
+}
+
+/* ---------- Speaking Portfolio scroll-stacking timeline ----------
+   Each event card sticks near the top of the viewport as you scroll;
+   as the next card arrives and starts covering it, the current card
+   eases back (scales down, fades slightly) to keep focus on what's
+   newest in view. */
+function initPortfolioTimeline() {
+  const events = Array.from(document.querySelectorAll('.portfolio-event'));
+  if (events.length < 2) return;
+
+  events.forEach((el, i) => { el.style.zIndex = i + 1; });
+
+  let ticking = false;
+  function update() {
+    ticking = false;
+    const stickTop = window.innerWidth <= 720 ? 76 : 110;
+    events.forEach((el, i) => {
+      const next = events[i + 1];
+      if (!next) { el.style.transform = ''; el.style.opacity = ''; return; }
+      const dist = next.getBoundingClientRect().top - stickTop;
+      const progress = 1 - Math.min(Math.max(dist / window.innerHeight, 0), 1);
+      el.style.transform = `scale(${1 - progress * 0.08})`;
+      el.style.opacity = String(1 - progress * 0.92);
+    });
+  }
+  function onScroll() {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }
+  update();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
 }
 
 /* ---------- Form handlers ----------
    These forms currently point at a placeholder Formspree-style
    endpoint. Before launch, replace ENDPOINT with Tina's real form
-   backend (see README.md — "Connecting the forms"). Until then,
+   backend (see README.md, "Connecting the forms"). Until then,
    submissions show a friendly confirmation but are NOT delivered
    anywhere. */
 function initFormHandlers() {
