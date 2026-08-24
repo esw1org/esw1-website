@@ -7,19 +7,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Color, ESW1 palette: Evergreen, Espresso, Ash Grey, Golden Chestnut, Pale Oak */
-  --color-orange: #DD8039;
-  --color-orange-dark: #7A4212;
-  --color-orange-light: #E9AC7E;
-  --color-orange-tint: #EBD6B7;
-  --color-ink: #091E03;
-  --color-ink-soft: #5A3228;
+  /* Color, ESW1 locked palette: Autumn Leaf, Golden Chestnut, Pale Oak, Graphite, Ink Black */
+  --color-orange: #E86005;
+  --color-orange-dark: #76380C;
+  --color-orange-secondary: #DD8039;
+  --color-orange-light: #F0985C;
+  --color-orange-tint: #D9B58A;
+  --color-ink: #2E2F2F;
+  --color-ink-soft: #504D46;
+  --color-ink-black: #051014;
   --color-paper: #D6C4A1;
-  --color-paper-alt: #C0CAAD;
+  --color-paper-alt: #C2B293;
   --color-white: #FFFFFF;
-  --color-line: #A79A79;
-  --color-crisis: #5A3228;
-  --color-crisis-tint: #C0CAAD;
+  --color-line: #A4977F;
+  --color-crisis: #76380C;
+  --color-crisis-tint: #C2B293;
 
   /* Type */
   --font-display: 'Fraunces', Georgia, serif;
@@ -267,7 +269,7 @@ p { margin: 0 0 1.1em; }
 .hero {
   position: relative;
   overflow: hidden;
-  background: var(--color-ink);
+  background: var(--color-ink-black);
   color: var(--color-white);
 }
 .hero-grid {
@@ -333,7 +335,7 @@ p { margin: 0 0 1.1em; }
 section { padding: 84px 0; }
 section.tight { padding: 56px 0; }
 .section-alt { background: var(--color-paper-alt); }
-.section-ink { background: var(--color-ink); color: var(--color-white); }
+.section-ink { background: var(--color-ink-black); color: var(--color-white); }
 .section-ink .eyebrow { color: var(--color-orange-light); }
 .section-ink h2 { color: var(--color-white); }
 
@@ -402,7 +404,7 @@ section.tight { padding: 56px 0; }
 
 /* Crisis strip, sits inside the sticky header, always on screen */
 .crisis-strip {
-  background: var(--color-ink-soft);
+  background: var(--color-crisis);
 }
 .crisis-strip .container {
   padding-top: 7px;
@@ -717,7 +719,7 @@ section.tight { padding: 56px 0; }
 
 /* Footer */
 .site-footer {
-  background: var(--color-ink);
+  background: var(--color-ink-black);
   color: rgba(255,255,255,0.78);
   padding: 64px 0 28px;
 }
