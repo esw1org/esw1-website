@@ -87,41 +87,81 @@ function initSearch() {
   }
 }
 
-/* ---------- Tribute song, plays quietly in the background ----------
+/* ---------- Tribute song ----------
    NOTE: "Don't Laugh at Me" (Mark Wills) is commercially licensed
    music, so instead of hosting the audio file ourselves, we stream it
-   from YouTube's own player in a hidden frame, with no visible widget or
-   button. Browsers block audio with sound from starting before the
-   visitor has interacted with the page at all, so this tries to start
-   the moment the page loads, and if the browser blocks that, it starts
-   silently on the visitor's very first click, scroll, or key press
-   instead (no separate click needed, any normal use of the page
-   triggers it). Swap SONG_ID for another official video ID if needed. */
+   from YouTube's own player in a hidden frame. Swap SONG_ID for another
+   official video ID if needed.
+
+   Behavior:
+   - On Tyler's Story page, it plays automatically (quietly in the
+     background). Browsers block audio with sound from starting before
+     the visitor has interacted with the page at all, so this tries to
+     start the moment the page loads, and if the browser blocks that,
+     it starts silently on the visitor's very first click, scroll, or
+     key press instead.
+   - On every other page, nothing plays automatically. Instead a
+     "Don't Laugh At Me" button is added to the nav, and the song only
+     plays if a visitor clicks it. */
 const SONG_ID = 'FVjbo8dW9c8'; // Mark Wills, "Don't Laugh At Me" (Official Music Video)
 
 function initSongAutoplay() {
   if (document.getElementById('esw1-song-frame')) return;
+
+  const isTylersStory = /(^|\/)tylers-story\.html$/.test(location.pathname);
 
   const frame = document.createElement('iframe');
   frame.id = 'esw1-song-frame';
   frame.style.cssText = 'position:fixed;width:1px;height:1px;left:-9999px;bottom:0;border:0;';
   frame.allow = 'autoplay';
   frame.title = "Tyler's song";
-  frame.src = `https://www.youtube.com/embed/${SONG_ID}?autoplay=1&loop=1&playlist=${SONG_ID}&controls=0`;
   document.body.appendChild(frame);
 
-  let started = false;
-  const startWithSound = () => {
-    if (started) return;
-    started = true;
-    frame.src = `https://www.youtube.com/embed/${SONG_ID}?autoplay=1&loop=1&playlist=${SONG_ID}&controls=0&mute=0`;
-    document.removeEventListener('click', startWithSound);
-    document.removeEventListener('scroll', startWithSound);
-    document.removeEventListener('keydown', startWithSound);
-  };
-  document.addEventListener('click', startWithSound, { once: true });
-  document.addEventListener('scroll', startWithSound, { once: true, passive: true });
-  document.addEventListener('keydown', startWithSound, { once: true });
+  const srcWith = (muted) =>
+    `https://www.youtube.com/embed/${SONG_ID}?autoplay=1&loop=1&playlist=${SONG_ID}&controls=0${muted ? '&mute=1' : '&mute=0'}`;
+
+  if (isTylersStory) {
+    frame.src = srcWith(true);
+    let started = false;
+    const startWithSound = () => {
+      if (started) return;
+      started = true;
+      frame.src = srcWith(false);
+      document.removeEventListener('click', startWithSound);
+      document.removeEventListener('scroll', startWithSound);
+      document.removeEventListener('keydown', startWithSound);
+    };
+    document.addEventListener('click', startWithSound, { once: true });
+    document.addEventListener('scroll', startWithSound, { once: true, passive: true });
+    document.addEventListener('keydown', startWithSound, { once: true });
+  } else {
+    initSongButton(frame, srcWith);
+  }
+}
+
+function initSongButton(frame, srcWith) {
+  const actions = document.querySelector('.nav-actions');
+  if (!actions) return;
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn btn-secondary song-btn';
+  btn.style.cssText = 'padding:0.6em 1.2em;font-size:0.88rem;';
+  btn.textContent = "Don't Laugh At Me";
+
+  let playing = false;
+  btn.addEventListener('click', () => {
+    playing = !playing;
+    if (playing) {
+      frame.src = srcWith(false);
+      btn.textContent = '⏸ Pause Song';
+    } else {
+      frame.src = 'about:blank';
+      btn.textContent = "Don't Laugh At Me";
+    }
+  });
+
+  actions.insertBefore(btn, actions.firstChild);
 }
 
 /* ---------- Homepage photo carousel, auto-rotating ---------- */
