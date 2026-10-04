@@ -173,18 +173,11 @@ function initCarousel() {
   const items = Array.from(track.children);
   if (items.length < 2) return;
 
-  // Fix: the clipping window must be the fixed outer container. If the
-  // sliding track itself clips (overflow:hidden), the clip box moves
-  // with the slides and only the first photo is ever visible.
-  carousel.style.overflow = 'hidden';
-  track.style.overflow = 'visible';
-  track.style.width = '100%';
-  track.style.flex = '0 0 100%';
-
-  const prevArrow = carousel.querySelector('.carousel-arrow-prev');
-  const nextArrow = carousel.querySelector('.carousel-arrow-next');
-  if (prevArrow) prevArrow.style.left = '14px';
-  if (nextArrow) { nextArrow.style.right = '14px'; nextArrow.style.left = 'auto'; }
+  // Layout (clipping window, track sizing, arrow positions) lives in
+  // style.css: .carousel clips (overflow:hidden) and .carousel-track is
+  // overflow:visible so the sliding track doesn't move its own clip box.
+  // Don't set those as inline styles here; inline styles would override
+  // the CSS, including the responsive arrow positions in the media queries.
 
   let index = 0;
   let timer = null;
