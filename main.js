@@ -75,7 +75,7 @@ function initSearch() {
           item.title.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q));
 
     if (matches.length === 0) {
-      results.innerHTML = '<div class="search-empty">No matches. Try “Tyler,” “speaking,” or “988.”</div>';
+      results.innerHTML = '<div class="search-empty">No matches. Try "Tyler," "speaking," or "988."</div>';
       return;
     }
     results.innerHTML = matches.map(m => `
@@ -192,6 +192,7 @@ function initCarousel() {
   }
 
   function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
 
   function start() { timer = setInterval(next, 5000); }
   function stop() { clearInterval(timer); }
@@ -199,6 +200,26 @@ function initCarousel() {
   start();
   carousel.addEventListener('mouseenter', stop);
   carousel.addEventListener('mouseleave', start);
+
+  // Arrow button listeners
+  const prevBtn = carousel.querySelector('.carousel-arrow-prev');
+  const nextBtn = carousel.querySelector('.carousel-arrow-next');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      prev();
+      stop();
+      start();
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      next();
+      stop();
+      start();
+    });
+  }
 }
 
 /* ---------- Speaking Portfolio scroll-stacking timeline ----------
